@@ -1,0 +1,38 @@
+<svg class="background">
+  
+  <!-- set debug background image -->
+  <image id="background-image" href="images/bg.png" />
+  
+  <!-- skies-->
+  <text id="sky"/>
+  <image id="sky" href = "images/sky/day.png"/>
+
+ <!-- sun-->
+  <text id="sun"/>
+  <image id = "sun" href="images/moons/sun.png" />
+ 
+ <!-- moon-->
+  <text id="moon" />
+  <image id = "moon" href="images/moons/moonfull.png" />
+
+<!--mountains-->
+  
+  <text id="mountains" />
+  <image id="mountains" href="images/mountains.png" />
+  
+  <!-- date and time information-->
+  <text id="clock-label" />
+  <text id="date-label" />
+
+
+  
+  <!-- heart beat information -->
+  <image id="heart" href="images/heart.png" />
+  <text id="heart-rate-label" />
+  
+  <!-- battery information -->
+  <text id="battery-label" />
+  <image id="battery" href="images/battery.png" />
+
+  
+</svg>
