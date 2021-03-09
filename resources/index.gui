@@ -4,20 +4,16 @@
   <image id="background-image" href="images/bg.png" />
   
   <!-- skies-->
-  <text id="sky"/>
+<g id ="skygroup">
   <image id="sky" href = "images/sky/day.png"/>
-
- <!-- sun-->
-  <text id="sun"/>
-  <image id = "sun" href="images/moons/sun.png" />
- 
- <!-- moon-->
-  <text id="moon" />
-  <image id = "moon" href="images/moons/moonfull.png" />
-
+</g>
+ <!-- moon and sun-->
+<g id="moongroup">
+  <image id = "moon" href="images/moons/moonfull.png"/>
+</g>
 <!--mountains-->
   
-  <text id="mountains" />
+
   <image id="mountains" href="images/mountains.png" />
   
   <!-- date and time information-->

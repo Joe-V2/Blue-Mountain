@@ -61,9 +61,15 @@ const _months = {
   default: 'ERR'
 }
 
-//taken from https://gist.github.com/endel/dfe6bb2fbe679781948c ---> get phase of moon for night display
+/***taken from https://gist.github.com/endel/dfe6bb2fbe679781948c ---> get phase of moon for night display
+*
+* @param {integer} year
+* @param {integer} month
+* @param {integer} day
+*/
 export function getMoonPhase(year, month, day)
 {
+
     var c = 0;
     var e = 0;
     var jd = 0;
@@ -75,7 +81,6 @@ export function getMoonPhase(year, month, day)
     }
 
     ++month;
-
     c = 365.25 * year;
 
     e = 30.6 * month;
@@ -102,7 +107,8 @@ export function getMoonPhase(year, month, day)
     // 5 => Waning Gibbous Moon
     // 6 => Last Quarter Moon
     // 7 => Waning Crescent Moon
-    console.log(b);
+    console.log(b)
+
   return b;
 
 }

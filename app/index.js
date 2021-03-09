@@ -21,7 +21,6 @@ const _date = document.getElementById("date-label");
 const _heartRate = document.getElementById("heart-rate-label");
 const _batteryLevel = document.getElementById("battery-label");
 
-const _sun = document.getElementById('sun');
 const _moon = document.getElementById("moon");
 const _sky = document.getElementById("sky");
 
@@ -42,7 +41,7 @@ clock.ontick = (evt) => {
 
   function rotateSun(currentTime){
     let degrees = currentTime.getSeconds();
-
+   // document.getElementById("moongroup").groupTransform.rotate.angle = 
  }
 
 
@@ -120,10 +119,7 @@ function updateTime(currentTime) {
   let mins = util.zeroPad(currentTime.getMinutes());
 
   _clock.text = `${hours}:${mins}`;
-
   // updates the background after 18:00
-  updateMoonPhase(util.getMoonPhase(currentTime.getUTCFullYear,currentTime.getMonth,currentTime.getDay));
-  
 }
 
 /**
@@ -181,9 +177,17 @@ function updateSky(currentTime, sunriseTime, sunsetTime){
   let sunsetTimeMins = sunsetTime.getMinutes();
 
   if ((currentTime.getMinutes >= sunriseTimeMins && currentTime.getHours >= sunriseTimeHours) || (currentTime.getHours <= sunsetTimeHours && currentTime.getHours <= sunsetTimeMins))
-  _sky.href = "images/sky/night.png"
+  {
+  _sky.href = "images/sky/day.png";
+  _moon.href = "images/moons/sun.png";
+  //_clock.text.font = "%237ac8f1";
+  }
   else
-  _sky.href = "images/sky/night.png"
+  {
+  _sky.href = "images/sky/night.png";
+  updateMoonPhase(util.getMoonPhase(currentTime.getUTCFullYear,currentTime.getMonth,currentTime.getDate)); 
+  //document.getElementByID("clock-label").text.font = {fill: "#2b3a42"};
+}
 }
 
 /**
@@ -209,7 +213,7 @@ function locationSuccess(position) {
   let gpsSunsetTime = new Date().sunset(position.coords.latitude, position.coords.longitude);
 
 
-  updateSky(today.date,gpsSunriseTime, gpsSunsetTime);
+  updateSky(today,gpsSunriseTime, gpsSunsetTime);
 }
 
 function locationError(error) {

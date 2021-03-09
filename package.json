@@ -29,5 +29,8 @@
   },
   "scripts": {
     "build": "fitbit-build"
+  },
+  "dependencies": {
+    "@svgdotjs/svg.js": "^3.0.16"
   }
 }
