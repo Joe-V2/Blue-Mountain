@@ -49,6 +49,7 @@ clock.ontick = (evt) => {
     let moongroup = mooninstance.getElementById("moongroup");
     
    moongroup.groupTransform.rotate.angle = degs;
+   
    mooninstance.animate("enable");
     }
     catch (error)
