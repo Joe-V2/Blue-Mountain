@@ -2,11 +2,10 @@
   viewport-fill: gray;
 }
 
-#moon{
-
-}
-
-#sun{
+#moongroup 
+{
+  transform-origin: center;
+  transform: "rotate(45deg)";
 
 }
 #clock-label {
@@ -15,7 +14,7 @@
   text-length: 32;
   text-anchor: middle;
   x: 150;
-  y: 280;
+  y: 260;
   fill: white;
 }
 
@@ -23,12 +22,12 @@
   /* x: 240;
   y: 40; */
   x: 150;
-  y: 220;
+  y: 193;
   font-size: 20;
   font-family: System-Bold;
   text-length: 22;
   text-anchor: middle;
-  fill: gray;
+  fill: white;
 }
 
 #battery {

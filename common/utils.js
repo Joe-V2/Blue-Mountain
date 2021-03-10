@@ -107,7 +107,6 @@ export function getMoonPhase(year, month, day)
     // 5 => Waning Gibbous Moon
     // 6 => Last Quarter Moon
     // 7 => Waning Crescent Moon
-    console.log(b)
 
   return b;
 

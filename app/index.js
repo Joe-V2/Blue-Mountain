@@ -13,7 +13,7 @@ import { debug } from "console";
 import * as fs from "fs";
 
 // Update the clock every minute. This can be seconds, minutes, or hours
-clock.granularity = "seconds";
+clock.granularity = "minutes";
 
 // Get a handle on the <text> element
 const _clock = document.getElementById("clock-label");
@@ -24,24 +24,27 @@ const _batteryLevel = document.getElementById("battery-label");
 const _moon = document.getElementById("moon");
 const _sky = document.getElementById("sky");
 
-let today = Date;
+let today = new Date();
 
 
 // Update the <text> element every tick with the current time
 clock.ontick = (evt) => {
 
   today = evt.date;
+
   updateHeartRateSensor();
   checkAndUpdateBatteryLevel();
-  updateTime(evt.date);
-  updateDate(evt.date);
-  rotateSun(evt.date);
+  updateTime(today);
+  updateDate(today);
+  rotateSun(today);
+  geolocation.getCurrentPosition(locationSuccess, locationError, geo_options);
+
 }
 
 
   function rotateSun(currentTime){
     let degrees = currentTime.getSeconds();
-   // document.getElementById("moongroup").groupTransform.rotate.angle = 
+   // document.getElementById("moongroup").groupTransform.rotate.angle = (degrees); 
  }
 
 
@@ -140,28 +143,28 @@ function updateMoonPhase(phase) {
   switch (phase)
   {
   case 0:
-    _moon.href =  "images/moons/moon-bm.png";
+    _moon.href =  "images/moons/moonbm.png";
     break;
   case 1:
-    _moon.href =  "images/moons/moon-wxc.png";
+    _moon.href =  "images/moons/moonwxc.png";
     break;
   case 2:
-    _moon.href =  "images/moons/moon-fq.png";
+    _moon.href =  "images/moons/moonfq.png";
     break;
   case 3:
-    _moon.href =  "images/moons/moon-wxg.png";
+    _moon.href =  "images/moons/moonwxg.png";
     break;
   case 4:
-    _moon.href =  "images/moons/moon-full.png";
+    _moon.href =  "images/moons/moonfull.png";
     break;
   case 5:
-    _moon.href =  "images/moons/moon-wng.png";
+    _moon.href =  "images/moons/moonwng.png";
     break;
   case 6:
-    _moon.href =  "images/moons/moon-lq.png";
+    _moon.href =  "images/moons/moonlq.png";
     break;
   case 7:
-    _moon.href =  "images/moons/moon-wnc.png";
+    _moon.href =  "images/moons/moonwnc.png";
     break;
   }
 }
@@ -171,22 +174,26 @@ function updateMoonPhase(phase) {
  * 
 */
 function updateSky(currentTime, sunriseTime, sunsetTime){
-  let sunriseTimeHours = sunriseTime.getHours();
-  let sunriseTimeMins = sunriseTime.getMinutes();
-  let sunsetTimeHours = sunsetTime.getHours();
-  let sunsetTimeMins = sunsetTime.getMinutes();
+  
+  let currentDay = currentTime.getDate();
+  let currentMonth = currentTime.getMonth();
+  let currentYear = currentTime.getUTCFullYear();
 
-  if ((currentTime.getMinutes >= sunriseTimeMins && currentTime.getHours >= sunriseTimeHours) || (currentTime.getHours <= sunsetTimeHours && currentTime.getHours <= sunsetTimeMins))
+  if (currentTime <= sunsetTime && currentTime >= sunriseTime)
   {
   _sky.href = "images/sky/day.png";
   _moon.href = "images/moons/sun.png";
-  //_clock.text.font = "%237ac8f1";
+  _clock.style.fill = "#7ac8f1";
+  _date.style.fill = "#ddfafe";
+  console.log("daytime set!");
   }
   else
   {
   _sky.href = "images/sky/night.png";
-  updateMoonPhase(util.getMoonPhase(currentTime.getUTCFullYear,currentTime.getMonth,currentTime.getDate)); 
-  //document.getElementByID("clock-label").text.font = {fill: "#2b3a42"};
+  updateMoonPhase(util.getMoonPhase(currentYear,currentMonth,currentDay)); 
+  _clock.style.fill = "#1a2a31";
+  _date.style.fill = "#364852";
+  console.log("nighttime set!");  
 }
 }
 
@@ -212,8 +219,8 @@ function locationSuccess(position) {
   let gpsSunriseTime = new Date().sunrise(position.coords.latitude, position.coords.longitude);
   let gpsSunsetTime = new Date().sunset(position.coords.latitude, position.coords.longitude);
 
-
   updateSky(today,gpsSunriseTime, gpsSunsetTime);
+
 }
 
 function locationError(error) {
@@ -229,4 +236,4 @@ function locationError(error) {
    timeout           : Infinity,
  };
 
-geolocation.getCurrentPosition(locationSuccess, locationError, geo_options);
+
