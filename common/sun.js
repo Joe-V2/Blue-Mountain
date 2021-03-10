@@ -2,11 +2,25 @@ Date.prototype.sunrise = function(latitude, longitude, zenith) {
 	return this.sunriseSet(latitude, longitude, true, zenith);
 }
 
+Date.prototype.sunriseNext = function(latitude, longitude, zenith) {
+	let next = this.getDate()
+	this.setDate(next+1);
+	return this.sunriseSet(latitude, longitude, true, zenith);
+}
+
+Date.prototype.sunsetLast = function(latitude, longitude, zenith) {
+	let last = this.getDate()
+	this.setDate(last-1);
+	return this.sunriseSet(latitude, longitude, false, zenith);
+}
+
+
 Date.prototype.sunset = function(latitude, longitude, zenith) {
 	return this.sunriseSet(latitude, longitude, false, zenith);
 }
 
 Date.prototype.sunriseSet = function(latitude, longitude, sunrise, zenith) {
+
 	if(!zenith) {
 		zenith = 90.8333;
 	}
@@ -70,12 +84,10 @@ Date.prototype.sunriseSet = function(latitude, longitude, sunrise, zenith) {
 		midnight.setUTCFullYear(this.getUTCFullYear());
 		midnight.setUTCMonth(this.getUTCMonth());
 		midnight.setUTCDate(this.getUTCDate());
-	
+
 
 
 	var milli = midnight.getTime() + (time * 60 *60 * 1000);
-
-
 	return new Date(milli);
 }
 

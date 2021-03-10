@@ -5,12 +5,21 @@
   
   <!-- skies-->
 <g id ="skygroup">
+<animateTransform attributeType="rotate" to="-360" begin="click" dur="3" />
   <image id="sky" href = "images/sky/day.png"/>
 </g>
  <!-- moon and sun-->
-<g id="moongroup" >
-  <image id = "moon" href="images/moons/moonfull.png" />
+ <symbol id="moonsym">
+<g id="moongroup" pointer-events="visible" transform="translate(50%,50%)" >
+<animateTransform  attributeType="rotate" to="180" begin="click" dur="3" final="restore"/>
+  <g transform="translate(-50%,-50%)">  
+  <image id="moon" href="images/moons/moonfull.png"/>
+  </g>
 </g>
+</symbol>
+<svg>
+<use id="mooninstance" href="#moonsym" width="100%" height="100%" />
+</svg>
 <!--mountains-->
   
 

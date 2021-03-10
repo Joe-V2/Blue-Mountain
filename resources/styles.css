@@ -2,12 +2,6 @@
   viewport-fill: gray;
 }
 
-#moongroup 
-{
-  transform-origin: center;
-  transform: "rotate(45deg)";
-
-}
 #clock-label {
   font-size: 80;
   font-family: System-Bold;

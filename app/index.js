@@ -24,6 +24,7 @@ const _batteryLevel = document.getElementById("battery-label");
 const _moon = document.getElementById("moon");
 const _sky = document.getElementById("sky");
 
+
 let today = new Date();
 
 
@@ -36,15 +37,24 @@ clock.ontick = (evt) => {
   checkAndUpdateBatteryLevel();
   updateTime(today);
   updateDate(today);
-  rotateSun(today);
+
   geolocation.getCurrentPosition(locationSuccess, locationError, geo_options);
 
 }
 
 
-  function rotateSun(currentTime){
-    let degrees = currentTime.getSeconds();
-   // document.getElementById("moongroup").groupTransform.rotate.angle = (degrees); 
+  function rotateSun(degs){
+    try{
+    let mooninstance = document.getElementById("mooninstance");
+    let moongroup = mooninstance.getElementById("moongroup");
+    
+   moongroup.groupTransform.rotate.angle = degs;
+   mooninstance.animate("enable");
+    }
+    catch (error)
+    {
+      console.log(error);
+    }
  }
 
 
@@ -173,11 +183,14 @@ function updateMoonPhase(phase) {
  * Updates the background image, and whether to use the sun or moon, depending on rise and set times.
  * 
 */
-function updateSky(currentTime, sunriseTime, sunsetTime){
+function updateSky(currentTime, sunriseTime, sunsetTime, lastSunsetTime, nextSunriseTime){
   
   let currentDay = currentTime.getDate();
   let currentMonth = currentTime.getMonth();
   let currentYear = currentTime.getUTCFullYear();
+  let degrees = -105;
+
+
 
   if (currentTime <= sunsetTime && currentTime >= sunriseTime)
   {
@@ -185,6 +198,14 @@ function updateSky(currentTime, sunriseTime, sunsetTime){
   _moon.href = "images/moons/sun.png";
   _clock.style.fill = "#7ac8f1";
   _date.style.fill = "#ddfafe";
+
+  let mins = ((currentTime-sunriseTime)*100) / (sunsetTime-sunriseTime);
+  
+  mins /=100; 
+  degrees = ((mins * 210)-105);
+  rotateSun(degrees);
+
+
   console.log("daytime set!");
   }
   else
@@ -193,8 +214,27 @@ function updateSky(currentTime, sunriseTime, sunsetTime){
   updateMoonPhase(util.getMoonPhase(currentYear,currentMonth,currentDay)); 
   _clock.style.fill = "#1a2a31";
   _date.style.fill = "#364852";
+  var mins = 0;
+    if (currentDay == sunriseTime.getDate() && currentTime >= sunriseTime)
+    {
+      mins = ((nextSunriseTime-currentTime)*100) / (nextSunriseTime - sunsetTime);
+      }
+  else if (currentTime <= sunriseTime)
+  {
+    mins = ((sunriseTime - currentTime)*100) / (sunriseTime - lastSunsetTime);
+  }
+  
+  mins /=100;
+  mins=1-mins;
+  degrees = ((mins * 210)-105);
+
+
+  rotateSun(degrees);
   console.log("nighttime set!");  
-}
+
+//else console.log("SUNRISE ERROR");
+  }
+
 }
 
 /**
@@ -218,8 +258,11 @@ function locationSuccess(position) {
   console.log("GPS Data refreshed, cache updated");
   let gpsSunriseTime = new Date().sunrise(position.coords.latitude, position.coords.longitude);
   let gpsSunsetTime = new Date().sunset(position.coords.latitude, position.coords.longitude);
-
-  updateSky(today,gpsSunriseTime, gpsSunsetTime);
+  let lastSunsetTime = new Date().sunsetLast(position.coords.latitude, position.coords.longitude);
+  let nextSunriseTime = new Date().sunriseNext(position.coords.latitude, position.coords.longitude);
+  
+  updateSky(today,gpsSunriseTime, gpsSunsetTime, lastSunsetTime, nextSunriseTime);
+  
 
 }
 
