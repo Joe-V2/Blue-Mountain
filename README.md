@@ -1,5 +1,8 @@
 # Blue Mountains
  
+
+based on code from @volkanto
+
  ![daywatch on wrist](https://media.discordapp.net/attachments/811209161911173121/819515814150930442/image0.jpg?width=682&height=910) ![nightwatch on wrist](https://media.discordapp.net/attachments/811209161911173121/819539409501290526/159787595_1122693368196010_6698247332293898003_n.png?width=512&height=910)
  
 Watchface for the fitbit versa that does these things:
@@ -9,6 +12,5 @@ Watchface for the fitbit versa that does these things:
 * Changes the background and sprites to reflect the time of day
 
 Known bugs:
-* image clipping during rotations as the sun and moon sprites are larger than 200px either way
 * slight lag acquiring gps data for the first time
 
