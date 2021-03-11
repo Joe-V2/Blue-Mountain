@@ -2,6 +2,15 @@
   viewport-fill: gray;
 }
 
+#moon
+{
+  height:50;
+  width:50;
+  x:125;
+  y:20;
+  
+}
+
 #clock-label {
   font-size: 80;
   font-family: System-Bold;
