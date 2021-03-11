@@ -1,4 +1,4 @@
-# Blue Mountains
+# Blue Mountain
  
 
 based on code from @volkanto
@@ -14,3 +14,8 @@ Watchface for the fitbit versa that does these things:
 Known bugs:
 * slight lag acquiring gps data for the first time
 
+
+To install:
+* grab the fitbit simulator, a versa or versa 2
+* connect it to the developer bridge
+* open a terminal in the root of this repo and type "npx fitbit bi"
