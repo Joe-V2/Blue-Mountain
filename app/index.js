@@ -305,9 +305,6 @@ var geo_options = {
     timeout: Infinity,
 };
 
-console.log("Running geolocator for first time running...");
-geolocation.getCurrentPosition(locationSuccess, locationError, geo_options);
-
-
+readFromCache();
 
 
