@@ -20,12 +20,25 @@ const _clock = document.getElementById("clock-label");
 const _date = document.getElementById("date-label");
 const _heartRate = document.getElementById("heart-rate-label");
 const _batteryLevel = document.getElementById("battery-label");
+const _moongroup = document.getElementById("moongroup");
 
 const _moon = document.getElementById("moon");
 const _sky = document.getElementById("sky");
 
 
 let today = new Date();
+
+function calc_point_on_circle(ratioAngle, len, cx, cy){
+  
+  var radAngle = ratioAngle * (Math.PI/180);
+  
+  return {
+          x: Math.sin(radAngle) * len + cx,
+          y: -Math.cos(radAngle) * len + cy
+        };  
+  
+}
+
 
 
 // Update the <text> element every tick with the current time
@@ -43,20 +56,15 @@ clock.ontick = (evt) => {
 }
 
 
-  function rotateSun(degs){
-    try{
-    let mooninstance = document.getElementById("mooninstance");
-    let moongroup = mooninstance.getElementById("moongroup");
-    
-   moongroup.groupTransform.rotate.angle = degs;
-   
-   mooninstance.animate("enable");
-    }
-    catch (error)
-    {
-      console.log(error);
-    }
- }
+function rotateSun(degs){
+  let mPoint = calc_point_on_circle(degs, 105, 150, 150);
+  
+  _moongroup.groupTransform.translate.x = mPoint.x
+  _moongroup.groupTransform.translate.y = mPoint.y;    
+
+  console.log(mPoint.x+"  "+mPoint.y);
+
+}
 
 
 console.log("Confirm Library Import: " + sunCalcLibrary());
@@ -225,10 +233,11 @@ function updateSky(currentTime, sunriseTime, sunsetTime, lastSunsetTime, nextSun
     mins = ((sunriseTime - currentTime)*100) / (sunriseTime - lastSunsetTime);
   }
   
+    
   mins /=100;
   mins=1-mins;
   degrees = ((mins * 210)-105);
-
+  
 
   rotateSun(degrees);
   console.log("nighttime set!");  
