@@ -1,4 +1,6 @@
-A companion app running in the fitbit smartphone app environment communicates significant location changes from a passive, low-accuracy geolocation api. These changes fire an event that caches the new location to some text files on the watch, with one each for the user's new latitude and longitude.
+![banner](https://repository-images.githubusercontent.com/346151660/a28a7580-8bfa-11eb-93eb-f2ea78606777)
+
+Blue Mountain uses a companion app running in the fitbit smartphone app environment, communicating significant location changes from a passive, low-accuracy geolocation api. These changes fire an event that caches the new location to some text files on the watch, with one each for the user's new latitude and longitude.
 The watch environment has access to the SVG displayed on its face, and updates the elements based on a few calculations:
 
 - Whether or not the current time is between today's sunrise and sunset
