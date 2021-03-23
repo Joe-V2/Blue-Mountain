@@ -1,37 +1,18 @@
-## Welcome to GitHub Pages
+A companion app running in the fitbit smartphone app environment communicates significant location changes from a passive, low-accuracy geolocation api. These changes fire an event that caches the new location to some text files on the watch, with one each for the user's new latitude and longitude.
+The watch environment has access to the SVG displayed on its face, and updates the elements based on a few calculations:
 
-You can use the [editor on GitHub](https://github.com/Joe-V2/Blue-Mountain/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+- Whether or not the current time is between today's sunrise and sunset
+- Whether or not the current time is between today's sunset and tomorrow's sunrise (before 12am in non-arctic timezones)
+- Whether or not the current time is between yesterday's sunset and tomorrow's sunrise (after 12am in non-arctic timezones)
+- This morning's phase of the moon, based on a value from the Julian calendar
+- The current time as a percentage of day or night, defined between sunrises and sunsets
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This allows the watch to not only update its background to a blue sky or a starry night, but also change the sun to a moon that reflects the current phase of the one outside, using the rotation of the sprite to reflect the time as a progression from sunrise to sunset, or vice versa.
 
-### Markdown
+The geolocation API is only used if:
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- an event is fired signalling the user has moved a significant distance (>5km), messaging a flag from the phone to the watch
+- there is no text file cached on the watch
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Joe-V2/Blue-Mountain/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+In either case, the files are created containing a new location, the watch updates its sky and sun/moon with the new data from the resultant file, and then all continues as normal.
+This concurrent messaging approach significantly reduces use of the phone APIs, and markedly improves battery life as a result.
