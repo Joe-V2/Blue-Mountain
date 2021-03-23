@@ -1,3 +1,5 @@
+![thumbnimg](https://repository-images.githubusercontent.com/346151660/15870a00-8253-11eb-893e-167c5fe2c80c)
+
 A companion app running in the fitbit smartphone app environment communicates significant location changes from a passive, low-accuracy geolocation api. These changes fire an event that caches the new location to some text files on the watch, with one each for the user's new latitude and longitude.
 The watch environment has access to the SVG displayed on its face, and updates the elements based on a few calculations:
 
